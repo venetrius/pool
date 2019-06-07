@@ -5,75 +5,17 @@
       <title>Pool</title>
       <meta name="viewport" content="initial-scale=1, maximum-scale=1">
       <!-- External JS -->
-      <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
+      <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"></script>
       <!-- App JS -->
-      <script type="text/javascript" src="/scripts/index.js"></script>
+      <script type="text/javascript" src="./scripts/index.js"></script>
   </head>
 <body>
 
 <canvas id="myCanvas" width="1200" height="510" style="border:2px solid black; background-color: green">
 Your browser does not support the HTML5 canvas tag.</canvas>
-
-<script>
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-
-for(let i = 0; i < 200; i++){
-// setTimeout(()=>render(i), 25*i);
-}
-
-
-function move() {
-  let time = 0;
-  
-  function render(){
-    console.log('drawing')
-    ctx.beginPath();
-    ctx.arc(95+time,50,40,0,2*Math.PI);
-    ctx.stroke();
-    time += 10;
-    if (time > 1000) {
-      clearInterval(id);
-    }
-    
-  }
-
-  var id = setInterval(render, 100);
-}
-move();
-function render(i){
- // if(i % 3 === 0){
-    const context = c.getContext('2d');
-    context.clearRect(0, 0, c.width, c.height);
- // }
-  ctx.beginPath();
-  ctx.fillStyle = "white";
-  ctx.arc(95+i,50+i,40,0,2*Math.PI);
-  ctx.fill();
-  ctx.beginPath();
-  ctx.fillStyle = "red";
-  ctx.arc(800-i,50+i,40,0,2*Math.PI);
-  ctx.fill();
-}
-
-
-var elem = document.getElementById("myCanvas"),
-  left = 0,
-  lastFrame = +new Date,
-  timer;
-// Move the element on the right at ~600px/s
-timer = setInterval(function() {
-  var now = +new Date,
-    deltaT = now - lastFrame;
-  elem.style.left = ( left += 10 * deltaT / 16 ) + "px";
-  lastFrame = now;
-  // clear the timer at 400px to stop the animation
-  if ( left > 400 ) {
-    clearInterval( timer );
-  }
-}, 16);
-
-</script> 
 
 </body>
 </html>
