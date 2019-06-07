@@ -17,9 +17,55 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 <script>
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
-ctx.beginPath();
-ctx.arc(95,50,40,0,2*Math.PI);
-ctx.stroke();
+
+for(let i = 0; i < 1000; i++){
+  setTimeout(()=>render(i), 100*i);
+}
+
+
+function move() {
+  let time = 0;
+  var id = setInterval(render, 10);
+  function render(time){
+  //const context = canvas.getContext('2d');
+  //context.clearRect(0, 0, canvas.width, canvas.height);
+    var ctx = c.getContext("2d");
+    ctx.beginPath();
+    ctx.arc(95+time,50,40,0,2*Math.PI);
+    ctx.stroke();
+    time += 10;
+    if (time > 1000) {
+      clearInterval(id);
+    }
+    
+  }
+}
+//move();
+function render(i){
+  //const context = canvas.getContext('2d');
+  //context.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
+  ctx.arc(95+i,50,40,0,2*Math.PI);
+  ctx.stroke();
+}
+
+
+var elem = document.getElementById("myCanvas"),
+  left = 0,
+  lastFrame = +new Date,
+  timer;
+// Move the element on the right at ~600px/s
+timer = setInterval(function() {
+  var now = +new Date,
+    deltaT = now - lastFrame;
+  elem.style.left = ( left += 10 * deltaT / 16 ) + "px";
+  lastFrame = now;
+  // clear the timer at 400px to stop the animation
+  if ( left > 400 ) {
+    clearInterval( timer );
+  }
+}, 16);
+
 </script> 
 
 </body>
