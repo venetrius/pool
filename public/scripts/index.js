@@ -1,4 +1,4 @@
-const BALL_SIZE = 80;
+const BALL_SIZE = 40;
 
 class Coordinate{
   constructor(x,y){
@@ -26,13 +26,11 @@ function initBoard(){
   var coordinates = [coordinate];
   var levels = [1, 3, 6, 10];
   for (var i = 0; i < 16; i++){
-    balls.push(new Ball(coordinate.copy(), colors[i]));
+    let nextCoord = coordinates.shift();
+    balls.push(new Ball(nextCoord, colors[i]));
+    coordinates.push(new Coordinate(nextCoord.x + BALL_SIZE * 0.89, nextCoord.y - BALL_SIZE / 2))
     if(levels.includes(i)){
-      coordinate.x= coordinate.x - BALL_SIZE * 0.89; // TODO 
-      coordinate.y= coordinate.y + BALL_SIZE / 2;
-    }
-    else{
-      coordinate.y = coordinate.y - BALL_SIZE;
+      coordinates.push(new Coordinate(nextCoord.x + BALL_SIZE * 0.89, nextCoord.y + BALL_SIZE / 2))
     }
   }
   return balls;
@@ -44,7 +42,7 @@ function draw(c, ball ){
   ctx = c.getContext('2d');
   ctx.beginPath();
   ctx.fillStyle = color;
-  ctx.arc(x,y,40,0,2*Math.PI);
+  ctx.arc(x,y,BALL_SIZE/2,0,2*Math.PI);
   ctx.fill();
 }
 // Code to run when page is loaded
