@@ -31,9 +31,9 @@ function initBoard(){
   }
   return balls;
 }
-function clearCanvas(c){
-  const context = c.getContext('2d');
-  context.clearRect(0, 0, c.width, c.height);
+
+function initTable(cb){
+  let ctx = cb.getContext("2d");
   ctx.beginPath();
   ctx.lineWidth = "52";
   ctx.strokeStyle = "black";
@@ -68,7 +68,12 @@ function clearCanvas(c){
   ctx.fill();
 }
 
-function draw(c, ball ){
+function clearCanvas(c){
+  const context = c.getContext('2d');
+  context.clearRect(0, 0, c.width, c.height);
+}
+
+function draw(c, ball){
   var {coordinate, color} = ball;
   var {x, y } = coordinate;
   ctx = c.getContext('2d');
@@ -77,50 +82,13 @@ function draw(c, ball ){
   ctx.arc(x,y,BALL_SIZE/2,0,2*Math.PI);
   ctx.fill();
 }
-// Code to run when page is loaded
-function draw2(i, ctx,  c){
-   const context = c.getContext('2d');
-   context.clearRect(0, 0, c.width, c.height);
-   ctx.beginPath();
-   ctx.fillStyle = "white";
-   ctx.arc(95+i,50+i,40,0,2*Math.PI);
-   ctx.fill();
-   ctx.beginPath();
-   ctx.fillStyle = "red";
-   ctx.arc(800-i,50+i,40,0,2*Math.PI);
-   ctx.fill();
- }
-
-function move(ctx, c) {
-  let time = 0;  
-  function render(){
-    draw2(time/2, ctx, c)
-    if (time > 1000) {
-      clearInterval(id);
-    }
-    time += 10;
-  }
-  var id = setInterval(render, 10);  
-}
 
 function singleWhite(c, container, ball, speed){
   let count = 0;
   function render2(){
-    /*if(container.isHitByCircle(ball)){
-      speed.x = + speed.y;
-      speed.y = - speed.x;}*/
-    //console.log(count);
     speed = container.getBounce(ball, speed)
     ball.coordinate.x = ball.coordinate.x + speed.x;
     ball.coordinate.y = ball.coordinate.y + speed.y;
- //   console.log(container.isHitByCircle(ball))
-/*
-    if(container.isHitByCircle(ball)){
-      speed.x = - speed.x;
-      speed.y = - speed.y;
-      ball.coordinate.x = ball.coordinate.x +2 * speed.x;
-      ball.coordinate.y = ball.coordinate.y + 2*  speed.y;      
-    }*/
     clearCanvas(c);
     draw(c, ball);
     count ++;
@@ -132,20 +100,19 @@ function singleWhite(c, container, ball, speed){
 }
 
 $( document ).ready(function() {
-//  initBoard();
+  let cb = document.getElementById("backgroundCanvas");
+  initTable(cb);
   const factor = 0.6;
-  const container = new ContainerP(BALL_SIZE * factor, 1016, BALL_SIZE * factor, 508); 
+  const container = new ContainerP(BALL_SIZE * factor, 1016 + BALL_SIZE * factor , BALL_SIZE * factor, 508 + BALL_SIZE * factor); 
   var c = document.getElementById("myCanvas");
-  var ctx = c.getContext("2d");
-  //move(ctx, c);
   balls = initBoard();
   balls.forEach(ball => {
-    draw(c, ball);
+    draw(cb, ball);
   });
   const whiteBall = new Ball(new Coordinate(200, 255),'white');
- // singleWhite();
- // draw(c,whiteBall);
-  singleWhite(c, container, whiteBall, {x:2, y:2});
+  draw(c,whiteBall);
+  singleWhite(c, container, whiteBall, {x:10, y:5}); // single white ball bounceing
+  
 });
 
 
