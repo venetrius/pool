@@ -1,29 +1,20 @@
 const BALL_SIZE = 23;
 
-class Ball{
+class PoolBall extends Ball{
   constructor(coordinate, color){
-    this.coordinate = coordinate
+    super(coordinate, BALL_SIZE)
     this.color = color;
   }
 }
-Ball.prototype.radius = BALL_SIZE;
-console.log(Ball.prototype.radius);
-Ball.prototype[movableIF] = function() {
-  return {
-      x : this.coordinate.x,
-      y : this.coordinate.y,
-      radius : Ball.prototype.radius
-  };
-}
+
 function initBoard(){
   let colors = ['yellow', 'blue', 'Chocolate', 'purple','orange','green','red','black', 'Brown', 'Cyan', 'DarkGreen', 'DarkSalmon', 'DimGrey', 'GoldenRod', 'FireBrick'];
   let balls = [];
-  //let coordinate = new Coordinate(800, 250);
   let coordinates = [new Coordinate(800, 250)];
   let levels = [1, 3, 6, 10];
   for (var i = 0; i < 16; i++){
     let nextCoord = coordinates.shift();
-    balls.push(new Ball(nextCoord, colors[i]));
+    balls.push(new PoolBall(nextCoord, colors[i]));
     coordinates.push(new Coordinate(nextCoord.x + BALL_SIZE * 0.89, nextCoord.y - BALL_SIZE / 2))
     if(levels.includes(i)){
       coordinates.push(new Coordinate(nextCoord.x + BALL_SIZE * 0.89, nextCoord.y + BALL_SIZE / 2))
@@ -109,7 +100,7 @@ $( document ).ready(function() {
   balls.forEach(ball => {
     draw(cb, ball);
   });
-  const whiteBall = new Ball(new Coordinate(200, 255),'white');
+  const whiteBall = new PoolBall(new Coordinate(200, 255),'white');
   draw(c,whiteBall);
   singleWhite(c, container, whiteBall, {x:10, y:5}); // single white ball bounceing
   
