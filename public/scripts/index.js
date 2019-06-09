@@ -2,8 +2,8 @@ const BALL_SIZE = 23;
 const factor = 0.6; // determines the with of border of the table, as well as the size of the holes
 
 class PoolBall extends Ball{
-  constructor(coordinate, color){
-    super(coordinate, BALL_SIZE)
+  constructor(coordinate, color, speedx, speedy){
+    super(coordinate, BALL_SIZE, speedx, speedy);
     this.color = color;
   }
 }
@@ -75,12 +75,12 @@ function draw(c, ball){
   ctx.fill();
 }
 
-function singleWhite(c, container, ball, speed){
+function singleWhite(c, container, ball){
   let count = 0;
   function render2(){
-    speed = container.getBounce(ball, speed)
-    ball.coordinate.x = ball.coordinate.x + speed.x;
-    ball.coordinate.y = ball.coordinate.y + speed.y;
+    container.getBounce(ball)
+    ball.coordinate.x = ball.coordinate.x + ball.momentum.x;
+    ball.coordinate.y = ball.coordinate.y + ball.momentum.y;
     clearCanvas(c);
     draw(c, ball);
     count ++;
@@ -100,9 +100,9 @@ $( document ).ready(function() {
   balls.forEach(ball => {
     draw(cb, ball);
   });
-  const whiteBall = new PoolBall(new Coordinate(200, 255),'white');
+  const whiteBall = new PoolBall(new Coordinate(200, 255),'white', 10, 5);
   draw(c,whiteBall);
-  singleWhite(c, container, whiteBall, {x:10, y:5}); // single white ball bounceing
+  singleWhite(c, container, whiteBall); // single white ball bounceing
   
 });
 
