@@ -97,10 +97,12 @@ $( document ).ready(function() {
   const container = new ContainerP(BALL_SIZE * factor, 1016 + BALL_SIZE * factor , BALL_SIZE * factor, 508 + BALL_SIZE * factor); 
   var c = document.getElementById("myCanvas");
   balls = placeBalls();
-  balls.forEach(ball => {
-    draw(cb, ball);
-  });
+  balls.forEach( ball => container.addBall(ball) );
+  balls.forEach( ball => { draw(cb, ball); });
+
+
   const whiteBall = new PoolBall(new Coordinate(200, 255),'white', 10, 5);
+  container.addBall(whiteBall);
   draw(c,whiteBall);
   singleWhite(c, container, whiteBall); // single white ball bounceing
   
