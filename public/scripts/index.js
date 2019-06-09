@@ -1,4 +1,5 @@
 const BALL_SIZE = 23;
+const factor = 0.6; // determines the with of border of the table, as well as the size of the holes
 
 class PoolBall extends Ball{
   constructor(coordinate, color){
@@ -7,7 +8,7 @@ class PoolBall extends Ball{
   }
 }
 
-function initBoard(){
+function placeBalls(){
   let colors = ['yellow', 'blue', 'Chocolate', 'purple','orange','green','red','black', 'Brown', 'Cyan', 'DarkGreen', 'DarkSalmon', 'DimGrey', 'GoldenRod', 'FireBrick'];
   let balls = [];
   let coordinates = [new Coordinate(800, 250)];
@@ -23,16 +24,16 @@ function initBoard(){
   return balls;
 }
 
-function initTable(cb){
+function drawTable(cb){
   let ctx = cb.getContext("2d");
   ctx.beginPath();
   ctx.lineWidth = "52";
   ctx.strokeStyle = "black";
   ctx.rect(0, 0, 1039, 531);
   ctx.stroke();
-  const factor = 0.6; 
   const maxX = 1039;
   const maxY = 531;
+  // add holes
   ctx.beginPath();
   ctx.fillStyle = 'grey';
   ctx.arc(BALL_SIZE,BALL_SIZE,BALL_SIZE*factor,0,2*Math.PI);
@@ -70,7 +71,7 @@ function draw(c, ball){
   ctx = c.getContext('2d');
   ctx.beginPath();
   ctx.fillStyle = color;
-  ctx.arc(x,y,BALL_SIZE/2,0,2*Math.PI);
+  ctx.arc(x, y, BALL_SIZE / 2, 0,2 * Math.PI);
   ctx.fill();
 }
 
@@ -92,11 +93,10 @@ function singleWhite(c, container, ball, speed){
 
 $( document ).ready(function() {
   let cb = document.getElementById("backgroundCanvas");
-  initTable(cb);
-  const factor = 0.6;
+  drawTable(cb);
   const container = new ContainerP(BALL_SIZE * factor, 1016 + BALL_SIZE * factor , BALL_SIZE * factor, 508 + BALL_SIZE * factor); 
   var c = document.getElementById("myCanvas");
-  balls = initBoard();
+  balls = placeBalls();
   balls.forEach(ball => {
     draw(cb, ball);
   });
